@@ -102,9 +102,9 @@ const Header = () => (
             </div>
             <nav className="space-x-6">
                 <a href="/" className="hover:text-gray-200">Home</a>
-                <a href="/packages" className="hover:text-gray-200">Packages</a>
-                <a href="/about" className="hover:text-gray-200">About</a>
-                <a href="/contact" className="hover:text-gray-200">Contact</a>
+                <a href="/packages" className="hover:text-gray-200"></a>
+                <a href="/about" className="hover:text-gray-200"></a>
+                <a href="/contact" className="hover:text-gray-200"></a>
             </nav>
         </div>
     </header>
