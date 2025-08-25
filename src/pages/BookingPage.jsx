@@ -121,25 +121,62 @@ const BookingPage = ({ onGoBack }) => {
     };
 
     // Handles the form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Booking submitted:', formData);
 
-        // Show the custom success message UI instead of a browser alert
-        setShowSuccessMessage(true);
+        const parts = formData.time.split(":")
+        const newTime = `${parts[0]}:${parts[1]}`;
+        const appointmentData = {
+            fullName : formData.name,
+            phoneNum : formData.phone,
+            email: formData.email,
+            appointmentDate:formData.date,
+            appointmentTime:newTime,
+            packageName:formData.service,
+            message:formData.message,
+            appointmentType:formData.appointmentType === 'Lab Visit'?"LAB_VISIT":"HOME_SERVICE"
 
-        // Clear the form fields after a successful submission
-        setFormData({
-            name: '',
-            phone: '',
-            email: '',
-            date: '',
-            time: '',
-            service: '',
-            appointmentType: 'Lab Visit', // Reset to default
-            address: '',
-            message: ''
-        });
+        };
+
+        try{
+            const response = await fetch("https://gen-daigonistic-lab-backend-03hy.onrender.com/api/patients",{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+
+                },
+                body: JSON.stringify(appointmentData)
+            })
+            if (response.ok) {
+                const data = response.json();
+                console.log(data);
+
+                // Show the custom success message UI instead of a browser alert
+                setShowSuccessMessage(true);
+
+                // Clear the form fields after a successful submission
+                setFormData({
+                    name: '',
+                    phone: '',
+                    email: '',
+                    date: '',
+                    time: '',
+                    service: '',
+                    appointmentType: 'Lab Visit', // Reset to default
+                    address: '',
+                    message: ''
+                });
+            }else {
+                console.log(response);
+
+            }
+        }catch (error){
+            console.log(error);
+        }
+
+
+
     };
 
     return (
@@ -344,6 +381,7 @@ const BookingPage = ({ onGoBack }) => {
                         <div className="text-center">
                             <button
                                 type="submit"
+
                                 className="w-full md:w-auto bg-blue-600 text-white px-10 py-4 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg"
                             >
                                 Confirm Booking
