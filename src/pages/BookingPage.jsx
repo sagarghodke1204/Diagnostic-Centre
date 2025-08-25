@@ -12,6 +12,88 @@ import {
     MapPin
 } from 'lucide-react';
 
+// --- Packages Data ---
+// This array holds all the information for the health packages.
+const packagesData = [
+    {
+        id: 'gd-women-basic',
+        title: 'GD Women Basic',
+        price: '2200 - 700',
+        includes: [
+            'Estradiol',
+            'CBC-Complete Hemogram Test(28)',
+            'Iron Studies (Iron,TIBC, Transferrin saturation)',
+            'LFT (Liver Function Test)',
+            'Kidney Profile',
+            'Lipid Profile',
+            'GD Wellness Vitamin Profile (3)',
+            'Hba1c (Whole Blood)',
+            'Thyroid Profile - Total T3,Total T4,TSH (TFT)',
+            'FSH, LH & Prolactin',
+        ],
+    },
+    {
+        id: 'fit-man',
+        title: 'Fit Man',
+        price: '1299 - 650',
+        includes: [
+            'Calcium',
+            'Serum Creatinine',
+            'Aspartate AminoTransferase (SGOT)',
+            'Alanine Transaminase (SGPT)',
+            'Uric Acid',
+            'Sugar (Glucose) Fasting',
+            'Prostate Specific Antigen (PSA)-Total',
+            'Urine Complete',
+            'Rheumatoid Factor (RF)',
+            'Lipid Profile',
+            'CBC-Complete Hemogram Test(28)',
+        ],
+    },
+    {
+        id: 'gd-advance-men',
+        title: 'GD Advance Men Package',
+        price: '2200 - 900',
+        includes: [
+            'Urine Complete',
+            'Specific Cardiac Profile (6 Parameters)',
+            'CBC-Complete Hemogram Test(28)',
+            'Iron Studies (Iron,TIBC, Transferrin saturation)',
+            'LFT (Liver Function Test)',
+            'Kidney Profile',
+            'Lipid Profile',
+            '25 OH Vitamin D',
+            'Hba1c (Whole Blood)',
+            'Thyroid Profile - Total T3,Total T4,TSH (TFT)',
+            'Lipase',
+            'Serum Electrolyte Profile',
+            'Prostate Specific Antigen (PSA)-Total',
+            'Amylase',
+            'Vitamin B12',
+        ],
+    },
+    {
+        id: 'gd-women-advance',
+        title: 'GD Women Advance',
+        price: '2800 - 1200',
+        includes: [
+            'Specific Cardiac Profile (6 Parameters)',
+            'CBC-Complete Hemogram Test(28)',
+            'Iron Studies (Iron,TIBC, Transferrin saturation)',
+            'LFT (Liver Function Test)',
+            'Kidney Profile',
+            'Lipid Profile',
+            'GD Wellness Vitamin Profile (3)',
+            'Hba1c (Whole Blood)',
+            'Thyroid Profile - Total T3,Total T4,TSH (TFT)',
+            'ANTI CCP (ACCP)',
+            'Calcium',
+            'FSH, LH & Prolactin',
+            'Estradiol',
+        ],
+    },
+];
+
 const BookingPage = ({ onGoBack }) => {
     // State to hold all form data
     const [formData, setFormData] = useState({
@@ -178,12 +260,13 @@ const BookingPage = ({ onGoBack }) => {
                                 required
                                 className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none"
                             >
-                                <option value="" disabled>Select a service...</option>
-                                <option value="Blood Test">Blood Test</option>
-                                <option value="Urine Analysis">Urine Analysis</option>
-                                <option value="Cardiac Tests">Cardiac Tests</option>
-                                <option value="Specialized Tests">Specialized Tests</option>
-                                <option value="Other">Other</option>
+                                <option value="" disabled>Select a package...</option>
+                                {/* Dynamically generated options from the packagesData array */}
+                                {packagesData.map(pkg => (
+                                    <option key={pkg.id} value={pkg.title}>
+                                        {pkg.title}
+                                    </option>
+                                ))}
                             </select>
                             <div
                                 className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
