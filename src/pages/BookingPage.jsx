@@ -111,6 +111,9 @@ const BookingPage = ({ onGoBack }) => {
     // State to control the visibility of the custom success message modal
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
+    const [isLoading, setIsLoading] = useState(false);
+
+
     // Handles changes to form input fields, updating the state
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -123,6 +126,7 @@ const BookingPage = ({ onGoBack }) => {
     // Handles the form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         console.log('Booking submitted:', formData);
 
         const parts = formData.time.split(":")
@@ -173,6 +177,8 @@ const BookingPage = ({ onGoBack }) => {
             }
         }catch (error){
             console.log(error);
+        }finally {
+            setIsLoading(false);
         }
 
 
@@ -381,10 +387,19 @@ const BookingPage = ({ onGoBack }) => {
                         <div className="text-center">
                             <button
                                 type="submit"
+                                disabled={isLoading}
 
                                 className="w-full md:w-auto bg-blue-600 text-white px-10 py-4 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg"
                             >
-                                Confirm Booking
+                                {
+                                    isLoading ? (
+                                        <>
+                                             Booking.......
+                                        </>
+                                    ): (
+                                        "Confirm Booking"
+                                    )
+                                }
                             </button>
                         </div>
                     </form>
