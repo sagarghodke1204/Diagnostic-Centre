@@ -144,7 +144,7 @@ const BookingPage = ({ onGoBack }) => {
         };
 
         try{
-            const response = await fetch("https://gen-daigonistic-lab-backend-03hy.onrender.com/api/patients",{
+            const response = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/patients`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -388,7 +388,6 @@ const BookingPage = ({ onGoBack }) => {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-
                                 className="w-full md:w-auto bg-blue-600 text-white px-10 py-4 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg"
                             >
                                 {
