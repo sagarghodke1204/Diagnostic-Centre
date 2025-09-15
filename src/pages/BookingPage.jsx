@@ -92,6 +92,26 @@ const packagesData = [
             'Estradiol',
         ],
     },
+    {
+        id: 'regular check up',
+        title: 'Routine Check Up',
+        price: '2800 - 1200',
+        includes: [
+            'Specific Cardiac Profile (6 Parameters)',
+            'CBC-Complete Hemogram Test(28)',
+            'Iron Studies (Iron,TIBC, Transferrin saturation)',
+            'LFT (Liver Function Test)',
+            'Kidney Profile',
+            'Lipid Profile',
+            'GD Wellness Vitamin Profile (3)',
+            'Hba1c (Whole Blood)',
+            'Thyroid Profile - Total T3,Total T4,TSH (TFT)',
+            'ANTI CCP (ACCP)',
+            'Calcium',
+            'FSH, LH & Prolactin',
+            'Estradiol',
+        ],
+    },
 ];
 
 const BookingPage = ({ onGoBack }) => {

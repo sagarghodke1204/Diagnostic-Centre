@@ -85,6 +85,27 @@ const packagesData = [
             'Estradiol',
         ],
     },
+
+    {
+        id: 'regular check up',
+        title: 'Routine Check Up',
+        price: 'Varies with tests ',
+        includes: [
+            'Specific Cardiac Profile (6 Parameters)',
+            'CBC-Complete Hemogram Test(28)',
+            'Iron Studies (Iron,TIBC, Transferrin saturation)',
+            'LFT (Liver Function Test)',
+            'Kidney Profile',
+            'Lipid Profile',
+            'GD Wellness Vitamin Profile (3)',
+            'Hba1c (Whole Blood)',
+            'Thyroid Profile - Total T3,Total T4,TSH (TFT)',
+            'ANTI CCP (ACCP)',
+            'Calcium',
+            'FSH, LH & Prolactin',
+            'Estradiol',
+        ],
+    },
 ];
 
 // --- Header Component (with Logo) ---
@@ -150,7 +171,7 @@ const PackagesSection = ({ onPackageSelect }) => (
                     Choose from our thoughtfully curated health check-up packages designed to suit different needs and lifestyles.
                 </p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10">
                 {packagesData.map((packageItem) => (
                     <PackageCard key={packageItem.id} packageItem={packageItem} onSelect={onPackageSelect} />
                 ))}
