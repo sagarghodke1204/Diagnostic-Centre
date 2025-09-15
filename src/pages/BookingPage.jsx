@@ -217,7 +217,7 @@ const BookingPage = ({ onGoBack }) => {
                                 className="bg-green-500 text-white p-6 rounded-2xl shadow-xl flex flex-col items-center text-center max-w-sm">
                                 <CheckCircle className="h-16 w-16 mb-4 animate-bounce" />
                                 <h3 className="text-2xl font-bold mb-2">Success!</h3>
-                                <p className="text-gray-100 mb-4">Your appointment request has been submitted successfully. We will contact you shortly to confirm.</p>
+                                <p className="text-gray-100 mb-4">Your request is in! We've sent a confirmation email your way—don't forget to check your spam folder if you can't find it. Our team will be in touch soon to confirm everything.</p>
                                 <button
                                     onClick={() => setShowSuccessMessage(false)}
                                     className="bg-white text-green-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors"
@@ -283,7 +283,8 @@ const BookingPage = ({ onGoBack }) => {
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    placeholder="Email Address (Optional)"
+                                    placeholder="Email Address "
+                                    required
                                     className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                                 />
                             </div>
