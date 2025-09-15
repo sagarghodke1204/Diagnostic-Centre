@@ -159,6 +159,7 @@ const BookingPage = ({ onGoBack }) => {
             appointmentTime:newTime,
             packageName:formData.service,
             message:formData.message,
+            address:formData.address,
             appointmentType:formData.appointmentType === 'Lab Visit'?"LAB_VISIT":"HOME_SERVICE"
 
         };
