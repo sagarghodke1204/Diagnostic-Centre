@@ -9,11 +9,11 @@ import {
     BriefcaseMedical,
     CheckCircle,
     Home,
-    MapPin
+    MapPin,
+    ChevronLeft
 } from 'lucide-react';
 
-// --- Packages Data ---
-// This array holds all the information for the health packages.
+// --- Full Packages Data ---
 const packagesData = [
     {
         id: 'gd-women-basic',
@@ -93,7 +93,7 @@ const packagesData = [
         ],
     },
     {
-        id: 'regular check up',
+        id: 'regular-check-up',
         title: 'Routine Check Up',
         price: '2800 - 1200',
         includes: [
@@ -115,7 +115,6 @@ const packagesData = [
 ];
 
 const BookingPage = ({ onGoBack }) => {
-    // State to hold all form data
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -123,64 +122,47 @@ const BookingPage = ({ onGoBack }) => {
         date: '',
         time: '',
         service: '',
-        appointmentType: 'Lab Visit', // Default to 'Lab Visit'
+        appointmentType: 'Lab Visit',
         address: '',
         message: ''
     });
 
-    // State to control the visibility of the custom success message modal
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
     const [isLoading, setIsLoading] = useState(false);
 
-
-    // Handles changes to form input fields, updating the state
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    // Handles the form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        console.log('Booking submitted:', formData);
 
-        const parts = formData.time.split(":")
+        const parts = formData.time.split(":");
         const newTime = `${parts[0]}:${parts[1]}`;
         const appointmentData = {
-            fullName : formData.name,
-            phoneNum : formData.phone,
+            fullName: formData.name,
+            phoneNum: formData.phone,
             email: formData.email,
-            appointmentDate:formData.date,
-            appointmentTime:newTime,
-            packageName:formData.service,
-            message:formData.message,
-            address:formData.address,
-            appointmentType:formData.appointmentType === 'Lab Visit'?"LAB_VISIT":"HOME_SERVICE"
-
+            appointmentDate: formData.date,
+            appointmentTime: newTime,
+            packageName: formData.service,
+            message: formData.message,
+            address: formData.address,
+            appointmentType: formData.appointmentType === 'Lab Visit' ? "LAB_VISIT" : "HOME_SERVICE"
         };
 
-        try{
-            const response = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/patients`,{
+        try {
+            const response = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/patients`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(appointmentData)
-            })
+            });
             if (response.ok) {
-                const data = response.json();
+                const data = await response.json();
                 console.log(data);
-
-                // Show the custom success message UI instead of a browser alert
                 setShowSuccessMessage(true);
-
-                // Clear the form fields after a successful submission
                 setFormData({
                     name: '',
                     phone: '',
@@ -188,37 +170,71 @@ const BookingPage = ({ onGoBack }) => {
                     date: '',
                     time: '',
                     service: '',
-                    appointmentType: 'Lab Visit', // Reset to default
+                    appointmentType: 'Lab Visit',
                     address: '',
                     message: ''
                 });
-            }else {
+            } else {
                 console.log(response);
-
             }
-        }catch (error){
+        } catch (error) {
             console.log(error);
-        }finally {
+        } finally {
             setIsLoading(false);
         }
-
-
-
     };
 
     return (
-        <section className="py-20 bg-gray-50">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="bg-white p-8 rounded-3xl shadow-2xl relative">
-                    {/* Conditional rendering for the custom success message modal */}
+        <section className="py-20 bg-slate-950 min-h-screen relative">
+            {/* Loading Overlay */}
+            {isLoading && (
+                <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center z-20">
+                    <div className="flex flex-col items-center gap-4">
+                        <svg
+                            className="animate-spin h-12 w-12 text-cyan-400"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                        >
+                            <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                            ></circle>
+                            <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+                            ></path>
+                        </svg>
+                        <p className="text-cyan-300 font-semibold text-lg">Booking your appointment...</p>
+                    </div>
+                </div>
+            )}
+
+            <style>
+                {`
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+                body { font-family: 'Inter', sans-serif; }
+                .animate-fade-in-up { animation: fadeInUp 1s ease-out; }
+                @keyframes fadeInUp {
+                    from { opacity: 0; transform: translateY(20px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                `}
+            </style>
+
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in-up relative z-10">
+                <div className="bg-slate-800 p-8 rounded-3xl shadow-2xl relative">
                     {showSuccessMessage && (
-                        <div
-                            className="absolute inset-0 bg-white bg-opacity-90 backdrop-blur-sm flex items-center justify-center p-4 rounded-3xl z-10">
-                            <div
-                                className="bg-green-500 text-white p-6 rounded-2xl shadow-xl flex flex-col items-center text-center max-w-sm">
+                        <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-sm flex items-center justify-center p-4 rounded-3xl z-10">
+                            <div className="bg-gradient-to-br from-green-500 to-green-700 text-white p-6 rounded-2xl shadow-xl flex flex-col items-center text-center max-w-sm">
                                 <CheckCircle className="h-16 w-16 mb-4 animate-bounce" />
                                 <h3 className="text-2xl font-bold mb-2">Success!</h3>
-                                <p className="text-gray-100 mb-4">Your request is in! We've sent a confirmation email your way—don't forget to check your spam folder if you can't find it. Our team will be in touch soon to confirm everything.</p>
+                                <p className="text-gray-100 mb-4">Your request is in! We've sent a confirmation email. Our team will contact you shortly.</p>
                                 <button
                                     onClick={() => setShowSuccessMessage(false)}
                                     className="bg-white text-green-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors"
@@ -229,198 +245,90 @@ const BookingPage = ({ onGoBack }) => {
                         </div>
                     )}
 
-                    {/* Back button to go to the previous page */}
-                    <button onClick={onGoBack}
-                            className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5}
-                             stroke="currentColor" className="w-5 h-5 mr-2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                        </svg>
-                        Back
+                    <button onClick={onGoBack} className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors mb-6">
+                        <ChevronLeft className="w-5 h-5 mr-2" /> Back
                     </button>
 
-                    {/* Page title and description */}
                     <div className="text-center mb-10">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">Book Your Appointment</h2>
-                        <p className="text-lg text-gray-600">
-                            Fill out the form below to schedule your diagnostic test. Our team will contact you shortly
-                            to confirm.
-                        </p>
+                        <h2 className="text-4xl font-bold text-white mb-4">Book Your Appointment</h2>
+                        <p className="text-lg text-slate-400">Fill out the form below to schedule your diagnostic test. Our team will contact you shortly.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid md:grid-cols-2 gap-6">
-                            {/* Input field for Full Name */}
                             <div className="relative">
-                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    placeholder="Full Name"
-                                    required
-                                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                                />
+                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Full Name" required
+                                       className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-600 bg-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500 focus:border-cyan-500 transition-colors" />
                             </div>
-                            {/* Input field for Phone Number */}
                             <div className="relative">
-                                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    placeholder="Phone Number"
-                                    required
-                                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                                />
+                                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone Number" required
+                                       className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-600 bg-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500 focus:border-cyan-500 transition-colors" />
                             </div>
-                            {/* Input field for Email Address */}
                             <div className="relative md:col-span-2">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    placeholder="Email Address "
-                                    required
-                                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                                />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" required
+                                       className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-600 bg-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500 focus:border-cyan-500 transition-colors" />
                             </div>
-                            {/* Input field for Date */}
                             <div className="relative">
-                                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                                <input
-                                    type="date"
-                                    name="date"
-                                    value={formData.date}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                                />
+                                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input type="date" name="date" value={formData.date} onChange={handleChange} required
+                                       className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-600 bg-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500 focus:border-cyan-500 transition-colors" />
                             </div>
-                            {/* Input field for Time */}
                             <div className="relative">
-                                <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                                <input
-                                    type="time"
-                                    name="time"
-                                    value={formData.time}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                                />
+                                <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input type="time" name="time" value={formData.time} onChange={handleChange} required
+                                       className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-600 bg-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500 focus:border-cyan-500 transition-colors" />
                             </div>
                         </div>
 
-                        {/* Dropdown for selecting a service */}
                         <div className="relative">
-                            <BriefcaseMedical className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                            <select
-                                name="service"
-                                value={formData.service}
-                                onChange={handleChange}
-                                required
-                                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none"
-                            >
+                            <BriefcaseMedical className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                            <select name="service" value={formData.service} onChange={handleChange} required
+                                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-600 bg-slate-700 text-white focus:ring-cyan-500 focus:border-cyan-500 transition-colors appearance-none">
                                 <option value="" disabled>Select a package...</option>
-                                {/* Dynamically generated options from the packagesData array */}
                                 {packagesData.map(pkg => (
-                                    <option key={pkg.id} value={pkg.title}>
-                                        {pkg.title}
-                                    </option>
+                                    <option key={pkg.id} value={pkg.title}>{pkg.title}</option>
                                 ))}
                             </select>
-                            <div
-                                className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                     strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
-                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                          d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                </svg>
-                            </div>
                         </div>
 
-                        {/* Appointment type selection with conditional address field */}
+                        {/* Appointment Type */}
                         <div className="space-y-4">
-                            <label className="text-gray-700 font-semibold text-lg">Appointment Type</label>
+                            <label className="text-slate-200 font-semibold text-lg">Appointment Type</label>
                             <div className="flex flex-col md:flex-row gap-4">
-                                <label
-                                    className={`flex items-center px-6 py-4 rounded-xl border-2 transition-colors cursor-pointer ${formData.appointmentType === 'Lab Visit' ? 'border-blue-600 bg-blue-50' : 'border-gray-300'}`}>
-                                    <input
-                                        type="radio"
-                                        name="appointmentType"
-                                        value="Lab Visit"
-                                        checked={formData.appointmentType === 'Lab Visit'}
-                                        onChange={handleChange}
-                                        className="form-radio h-5 w-5 text-blue-600 mr-3"
-                                    />
-                                    <MapPin className="text-blue-600 mr-2" />
-                                    <span>Lab Visit</span>
+                                <label className={`flex items-center px-6 py-4 rounded-xl border-2 transition-colors cursor-pointer ${formData.appointmentType === 'Lab Visit' ? 'border-cyan-600 bg-cyan-900/30' : 'border-slate-600 bg-slate-700'}`}>
+                                    <input type="radio" name="appointmentType" value="Lab Visit" checked={formData.appointmentType === 'Lab Visit'} onChange={handleChange}
+                                           className="form-radio h-5 w-5 text-cyan-500 mr-3 border-slate-500 bg-slate-600" />
+                                    <MapPin className="text-cyan-400 mr-2" /> <span className="text-white">Lab Visit</span>
                                 </label>
-                                <label
-                                    className={`flex items-center px-6 py-4 rounded-xl border-2 transition-colors cursor-pointer ${formData.appointmentType === 'Home Service' ? 'border-blue-600 bg-blue-50' : 'border-gray-300'}`}>
-                                    <input
-                                        type="radio"
-                                        name="appointmentType"
-                                        value="Home Service"
-                                        checked={formData.appointmentType === 'Home Service'}
-                                        onChange={handleChange}
-                                        className="form-radio h-5 w-5 text-blue-600 mr-3"
-                                    />
-                                    <Home className="text-blue-600 mr-2" />
-                                    <span>Home Service</span>
+                                <label className={`flex items-center px-6 py-4 rounded-xl border-2 transition-colors cursor-pointer ${formData.appointmentType === 'Home Service' ? 'border-cyan-600 bg-cyan-900/30' : 'border-slate-600 bg-slate-700'}`}>
+                                    <input type="radio" name="appointmentType" value="Home Service" checked={formData.appointmentType === 'Home Service'} onChange={handleChange}
+                                           className="form-radio h-5 w-5 text-cyan-500 mr-3 border-slate-500 bg-slate-600" />
+                                    <Home className="text-cyan-400 mr-2" /> <span className="text-white">Home Service</span>
                                 </label>
                             </div>
                         </div>
 
-                        {/* Conditionally rendered address field for Home Service */}
                         {formData.appointmentType === 'Home Service' && (
                             <div className="relative">
-                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                                <input
-                                    type="text"
-                                    name="address"
-                                    value={formData.address}
-                                    onChange={handleChange}
-                                    placeholder="Full Address"
-                                    required
-                                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                                />
+                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Full Address" required
+                                       className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-600 bg-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500 focus:border-cyan-500 transition-colors" />
                             </div>
                         )}
 
-                        {/* Textarea for additional message */}
                         <div className="relative">
-                            <MessageSquare className="absolute left-4 top-4 text-gray-400" />
-                            <textarea
-                                name="message"
-                                value={formData.message}
-                                onChange={handleChange}
-                                placeholder="Any specific requests or questions? (Optional)"
-                                rows="4"
-                                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                            ></textarea>
+                            <MessageSquare className="absolute left-4 top-4 text-slate-400" />
+                            <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Any specific requests or questions? (Optional)" rows="4"
+                                      className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-600 bg-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500 focus:border-cyan-500 transition-colors"></textarea>
                         </div>
 
-                        {/* Submit button */}
-                        <div className="text-center">
-                            <button
-                                type="submit"
-                                disabled={isLoading}
-                                className="w-full md:w-auto bg-blue-600 text-white px-10 py-4 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg"
-                            >
-                                {
-                                    isLoading ? (
-                                        <>
-                                             Booking.......
-                                        </>
-                                    ): (
-                                        "Confirm Booking"
-                                    )
-                                }
+                        <div className="text-center flex justify-center" >
+                            <button type="submit" disabled={isLoading}
+                                    className="w-full md:w-auto bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-900 px-10 py-4 rounded-full font-semibold hover:from-cyan-300 hover:to-blue-400 transition-colors shadow-lg flex items-center justify-center gap-2 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                                Confirm Booking
                             </button>
                         </div>
                     </form>
