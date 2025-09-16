@@ -1,12 +1,53 @@
-# React + Vite
+# 🧪 Diagnostic Centre
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack **Diagnostic Centre Management** web application designed to simplify online medical test bookings, provide detailed information about diagnostic services, and manage patient interactions efficiently.  
 
-Currently, two official plugins are available:
+This project has:  
+- **Frontend (React + TailwindCSS)** hosted on **Vercel**  
+- **Backend (Spring Boot + MySQL)** hosted on **Render**  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Live Demo
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🌐 **Visitor Link (Frontend):** [https://diagnostic-centre-one.vercel.app](https://diagnostic-centre-one.vercel.app)  
+- ⚙️ **Backend API (Render):**  on Render 
+
+---
+
+## 📌 Features
+
+### 🖥️ Frontend (React + Vite + TailwindCSS)
+- Modern and responsive UI built with **React** and **TailwindCSS**  
+- Service listing with **"Learn More"** details page  
+- Online booking form with appointment scheduling  
+- Contact section with integrated call/email quick actions  
+- Optimized for mobile and desktop devices  
+- Hosted on **Vercel** for blazing-fast performance  
+
+### ⚙️ Backend (Spring Boot + MySQL)
+- RESTful APIs for managing services, appointments, and contact queries  
+- Secure authentication & authorization with **JWT**  
+- Data persistence using **Spring Data JPA + MySQL**  
+- Deployed on **Render** with scalable cloud hosting  
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React (Vite)
+- TailwindCSS
+- Lucide Icons
+- Axios (API integration)
+- Hosted on **Vercel**
+
+### Backend
+- Spring Boot
+- Spring Security (JWT Authentication)
+- Spring Data JPA
+- MySQL
+- Hosted on **Render**
+
+
+
