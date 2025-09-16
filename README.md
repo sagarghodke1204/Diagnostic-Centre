@@ -4,7 +4,7 @@ A full-stack **Diagnostic Centre Management** web application designed to simpli
 
 This project has:  
 - **Frontend (React + TailwindCSS)** hosted on **Vercel**  
-- **Backend (Spring Boot + MySQL)** hosted on **Render**  
+- **Backend (Spring Boot + Mongo)** hosted on **Render**  
 
 ---
 
@@ -27,8 +27,7 @@ This project has:
 
 ### ⚙️ Backend (Spring Boot + MySQL)
 - RESTful APIs for managing services, appointments, and contact queries  
-- Secure authentication & authorization with **JWT**  
-- Data persistence using **Spring Data JPA + MySQL**  
+- Data persistence using **Spring Data JPA + Mongo Atlas**  
 - Deployed on **Render** with scalable cloud hosting  
 
 ---
@@ -46,7 +45,7 @@ This project has:
 - Spring Boot
 - Spring Security (JWT Authentication)
 - Spring Data JPA
-- MySQL
+- MongoDB Atlas
 - Hosted on **Render**
 
 
