@@ -8,6 +8,8 @@ import ServicesPage from './ServicesPage.jsx';
 
 import labLogo from '../assets/logo/img.png';
 import labLocationImage from '../assets/images/img.png';
+import BgVideoHome from '../assets/video/Home3.mp4';
+
 
 // --- Reusable Section Component ---
 const Section = ({ id, title, subtitle, children }) => (
@@ -110,11 +112,24 @@ const Hero = ({ onBookNow, onViewServices }) => {
         <section
             id="home"
             ref={ref}
-            className="bg-gradient-to-r from-slate-950 to-indigo-800 text-white py-24 md:py-40 rounded-b-3xl shadow-lg relative overflow-hidden"
+            className="relative text-white py-24 md:py-40 rounded-b-3xl shadow-lg overflow-hidden"
         >
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-950 to-indigo-800 opacity-80"></div>
+            {/* Background Video */}
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+            >
+                <source src={BgVideoHome} type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
 
+            {/* Theme Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-950/95 via-slate-900/80 to-indigo-800/70"></div>
+
+            {/* Content */}
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 text-center">
                 {/* Main Heading */}
                 <h2

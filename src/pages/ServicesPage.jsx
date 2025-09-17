@@ -6,6 +6,7 @@ import gdAdvanceMenImg from '../assets/images/GD_Advance_Men.png';
 import gdWomenAdvanceImg from '../assets/images/GD_Women_Advance.png';
 import gdWomenBasiceImg from '../assets/images/GD_Women_Basic.png';
 import routineCheckup from '../assets/images/routine-checkup.png';
+import BgVideoHome from '../assets/video/test.mp4';
 
 
 // --- Packages Data ---
@@ -149,20 +150,35 @@ const Footer = () => (
     </footer>
 );
 
-// --- Hero Section ---
 const HeroSection = () => (
-    <section className="bg-slate-900 text-white py-24 md:py-40 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 to-indigo-800 opacity-90"></div>
+    <section className="relative text-white py-24 md:py-40 overflow-hidden">
+        {/* Background Video */}
+        <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+        >
+            <source src={BgVideoHome} type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
+
+        {/* Theme Overlay (dark + indigo blend) */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950/95 via-slate-900/80 to-indigo-800/70"></div>
+
+        {/* Content */}
         <div className="relative max-w-7xl mx-auto px-4 text-center z-10 animate-fade-in-up">
-            <h2 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tighter mb-4 drop-shadow-lg">
+            <h2 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tighter mb-4 drop-shadow-2xl">
                 Your Health, Our Priority
             </h2>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-8 opacity-90 font-light">
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-8 opacity-90 font-light drop-shadow-lg">
                 Discover our comprehensive health packages designed to give you peace of mind with accurate diagnostics and expert care.
             </p>
             <button
                 onClick={() => document.getElementById('packages').scrollIntoView({ behavior: 'smooth' })}
-                className="bg-cyan-400 text-slate-900 px-10 py-5 rounded-full font-bold text-lg shadow-2xl hover:bg-cyan-300 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+                className="bg-cyan-400 text-slate-900 px-10 py-5 rounded-full font-bold text-lg shadow-2xl
+                           hover:bg-cyan-300 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
             >
                 Explore Packages
             </button>
