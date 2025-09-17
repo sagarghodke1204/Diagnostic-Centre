@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import labLogo from '../assets/logo/img.png';
 import { ChevronLeft, ChevronRight, CheckCircle, HeartPulse } from 'lucide-react';
+import fitManImg from '../assets/images/fit_man.png';
+import gdAdvanceMenImg from '../assets/images/GD_Advance_Men.png';
+import gdWomenAdvanceImg from '../assets/images/GD_Women_Advance.png';
+import gdWomenBasiceImg from '../assets/images/GD_Women_Basic.png';
+import routineCheckup from '../assets/images/routine-checkup.png';
+
 
 // --- Packages Data ---
 const packagesData = [
@@ -8,6 +14,7 @@ const packagesData = [
         id: 'gd-women-basic',
         title: 'GD Women Basic',
         price: '2200',
+        image: gdWomenBasiceImg,
         includes: [
             'Estradiol',
             'CBC-Complete Hemogram Test(28)',
@@ -25,6 +32,7 @@ const packagesData = [
         id: 'fit-man',
         title: 'Fit Man',
         price: '1299',
+        image: fitManImg,
         includes: [
             'Calcium',
             'Serum Creatinine',
@@ -42,6 +50,7 @@ const packagesData = [
     {
         id: 'gd-advance-men',
         title: 'GD Advance Men Package',
+        image: gdAdvanceMenImg,
         price: '2200',
         includes: [
             'Urine Complete',
@@ -65,6 +74,7 @@ const packagesData = [
         id: 'gd-women-advance',
         title: 'GD Women Advance',
         price: '2800',
+        image: gdWomenAdvanceImg,
         includes: [
             'Specific Cardiac Profile (6 Parameters)',
             'CBC-Complete Hemogram Test(28)',
@@ -85,6 +95,7 @@ const packagesData = [
         id: 'regular check up',
         title: 'Routine Check Up',
         price: 'Varies with tests',
+        image: routineCheckup,
         includes: [
             'Specific Cardiac Profile (6 Parameters)',
             'CBC-Complete Hemogram Test(28)',
@@ -211,27 +222,41 @@ const PackageDetailsPage = ({ packageItem, onGoBack, onBookNow }) => {
     );
 
     return (
-        <section className="py-20 bg-slate-900 min-h-screen">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="bg-slate-800 p-10 rounded-3xl shadow-2xl relative border border-slate-700">
+        <section
+            className="py-20 min-h-screen relative text-white"
+            style={{
+                backgroundImage: `url(${packageItem.image || '/images/default-bg.jpg'})`, // 👈 use package-specific image
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+            }}
+        >
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-slate-900/85"></div>
+
+            <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="bg-slate-800/90 p-10 rounded-3xl shadow-2xl relative border border-slate-700">
                     <button onClick={onGoBack} className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors mb-8 text-lg font-semibold">
                         <ChevronLeft className="w-5 h-5 mr-2" /> Back to Packages
                     </button>
+
                     <div className="text-center mb-10">
-                        <h2 className="text-4xl font-extrabold text-white mb-2">{packageItem.title}</h2>
+                        <h2 className="text-4xl font-extrabold mb-2">{packageItem.title}</h2>
                         <p className="text-2xl font-bold text-cyan-400 mb-4">₹{packageItem.price}</p>
                     </div>
+
                     <div className="border-t border-slate-700 pt-8 mt-8">
-                        <h3 className="text-2xl font-bold text-white mb-6">What's Included?</h3>
+                        <h3 className="text-2xl font-bold mb-6">What's Included?</h3>
                         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {packageItem.includes.map((item, idx) => (
-                                <li key={idx} className="flex items-start text-slate-300 p-4 bg-slate-700 rounded-lg shadow-sm">
+                                <li key={idx} className="flex items-start text-slate-300 p-4 bg-slate-700/80 rounded-lg shadow-sm">
                                     <CheckCircle className="h-5 w-5 text-green-400 mr-3 flex-shrink-0 mt-1" />
                                     <span className="text-lg">{item}</span>
                                 </li>
                             ))}
                         </ul>
                     </div>
+
                     <div className="text-center mt-12">
                         <button
                             onClick={() => onBookNow(packageItem.title)}
@@ -245,6 +270,7 @@ const PackageDetailsPage = ({ packageItem, onGoBack, onBookNow }) => {
         </section>
     );
 };
+
 
 // --- Main PackagesPage Component ---
 const PackagesPage = ({ onBookNow }) => {
