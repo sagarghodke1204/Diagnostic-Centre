@@ -25,7 +25,7 @@ This project has:
 - Optimized for mobile and desktop devices  
 - Hosted on **Vercel** for blazing-fast performance  
 
-### ⚙️ Backend (Spring Boot + MySQL)
+### ⚙️ Backend (Spring Boot + Mongo Atlas)
 - RESTful APIs for managing services, appointments, and contact queries  
 - Data persistence using **Spring Data JPA + Mongo Atlas**  
 - Deployed on **Render** with scalable cloud hosting  
